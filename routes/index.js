@@ -1,4 +1,7 @@
 const router = require("express").Router();
+router.get("/hc", function(req, res){
+    res.send("ok")
+});
 const apiRoutes = require("./api/index");
 
 // API Routes
