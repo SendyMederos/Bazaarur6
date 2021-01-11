@@ -6,7 +6,7 @@ const httpConfig = axios.create({
 });
 
 httpConfig.interceptors.request.use((req) => {
-    req.baseURL = process.env.NODE_ENV === "production" ? ' https://intense-harbor-57614.herokuapp.com/' : "http://localhost:8080/api";
+    req.baseURL = process.env.NODE_ENV === "production" ? ' https://intense-harbor-57614.herokuapp.com/' : "http://localhost:8080/";
     req.headers = {
         ...req.headers,
     };

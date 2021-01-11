@@ -78,7 +78,7 @@ export default function Signing() {
             setMessages([{
                 prompt: "Logging in..."
             }])
-            setTimeout(() => history.push("/home"), 1500)
+            setTimeout(() => history.push("home"), 1500)
             resetMessages()
 
         }
@@ -96,14 +96,14 @@ export default function Signing() {
             setMessages([{
                 prompt: "Successfully created your user"
             }])
-            setTimeout(() => history.push("/home"), 1500)
+            setTimeout(() => history.push("home"), 1500)
             resetMessages()
         }
     }
 
     return (
         <div style={{ width: "100%" }}>
-            {cookie ? <Redirect to="/home" /> : ""}
+            {cookie ? <Redirect to="/home"/> : ""}
             <div className="row">
                 <div className="col-12 backbox">
                     <div className="forms">
