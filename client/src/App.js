@@ -10,21 +10,31 @@ import { Error404 } from "./pages/errors/404";
 import { Layout } from "./components/Layout";
 import { Posting } from "./pages/posting";
 import Axios from 'axios'
+import { useSelector } from "react-redux"
 
 function App() {
 
   const [userLoggedIn, setUserLoggedIn] = useState(false)
 
-  useEffect(() => {
-    checkCookie()
-  }, [])
+  // useEffect(() => {
+  //   checkCookie()
+  // }, [])
 
-  const checkCookie = () => {
-    return Axios.get('/checkcookie')
-      .then(res => res.data ? setUserLoggedIn(true) : "")
+  // const checkCookie = () => {
+  //   return Axios.get('/checkcookie')
+  //     .then(res => res.data ? setUserLoggedIn(true) : "")
+  // }
+  const { check } = useSelector(state => state.loginreducer);
+  function checkCheck(){
+    
   }
+ useEffect(() => {
+  if (check !== undefined ||  check !== null) {
+    setUserLoggedIn(true) ;
+   }
+ }, [])
 
-  return (<Router basename={process.env.BASE_URL}>
+  return (<Router>
     <Switch>
       <Route exact path="/" component={Signing} />
       <Route path="/signing" component={Signing} />

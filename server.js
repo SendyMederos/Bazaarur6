@@ -7,32 +7,30 @@ const validateUser = require('./auth').validateUser
 const bodyParser = require('body-parser')
 const app = express();
 const PORT = process.env.PORT || 8080;
-const corsVar ={
-  credentials: true,
-  origin: true,
-}
+
 require('dotenv').config({ silent: true })
 require('./auth')
 
-
-// static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
 // middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors( corsVar))
+app.use(cors({
+  credentials: true,
+  origin: ["http://localhost:3000"],
+}))
 app.use(cookieParser())
 app.use(bodyParser.raw({ limit: "100mb" }))
 app.use(bodyParser.json())
 app.use(validateUser)
 app.use(routes)
 
-
+// static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 // connect to MongoDB
-mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // start the server
 app.listen(PORT, function () {

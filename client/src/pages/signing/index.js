@@ -4,15 +4,18 @@ import Axios from 'axios'
 import "./style.css"
 import { createUser, login } from '../../services/http/authHttp';
 import { Alert, Fade } from "reactstrap";
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { useDispatch,  } from "react-redux";
+import { loginUserRedux } from "../../redux/actions/loginactions"
+
 
 export default function Signing() {
-
+    const dispatch = useDispatch()
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [messages, setMessages] = useState([])
     const [cookie, setCookie] = useState(false)
+    
 
-    const history = useHistory()
     useEffect(() => {
         checkCookie()
     }, [])
@@ -21,7 +24,7 @@ export default function Signing() {
         return Axios.get('/checkcookie')
             .then(res => res.data ? setCookie(true) : "")
     }
-
+    
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: '',
@@ -75,10 +78,12 @@ export default function Signing() {
             }])
             resetMessages()
         } else {
+            console.log(response.user)
+            dispatch(loginUserRedux(response.user))
             setMessages([{
                 prompt: "Logging in..."
             }])
-            setTimeout(() => history.push("home"), 1500)
+            setTimeout(() => window.location.href = "/home", 1500)
             resetMessages()
 
         }
@@ -96,14 +101,14 @@ export default function Signing() {
             setMessages([{
                 prompt: "Successfully created your user"
             }])
-            setTimeout(() => history.push("home"), 1500)
+            setTimeout(() => window.location.href = "/home", 1500)
             resetMessages()
         }
     }
 
     return (
         <div style={{ width: "100%" }}>
-            {cookie ? <Redirect to="/home"/> : ""}
+            {cookie ? <Redirect to="/home" /> : ""}
             <div className="row">
                 <div className="col-12 backbox">
                     <div className="forms">
@@ -124,7 +129,7 @@ export default function Signing() {
                 </div>
                 <div className="col-2 right">
                     <img className=""
-                        src="https://i.pinimg.com/originals/b0/63/e6/b063e69aec55ee699cf38c757cabaae3.jpg" alt="bg155"/>
+                        src="https://i.pinimg.com/originals/b0/63/e6/b063e69aec55ee699cf38c757cabaae3.jpg" />
                 </div>
             </div>
         </div>
